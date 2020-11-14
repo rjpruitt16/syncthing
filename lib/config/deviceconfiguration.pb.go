@@ -43,11 +43,16 @@ type DeviceConfiguration struct {
 	PendingFolders           []ObservedFolder                                     `protobuf:"bytes,15,rep,name=pending_folders,json=pendingFolders,proto3" json:"pendingFolders" xml:"pendingFolder"`
 	MaxRequestKiB            int                                                  `protobuf:"varint,16,opt,name=max_request_kib,json=maxRequestKib,proto3,casttype=int" json:"maxRequestKiB" xml:"maxRequestKiB"`
 <<<<<<< HEAD
+<<<<<<< HEAD
 	RemoteGUIPort            int                                                  `protobuf:"varint,17,opt,name=remote_gui_port,json=remoteGuiPort,proto3,casttype=int" json:"remoteGUIPort" xml:"remoteGUIPort"`
 =======
 	Untrusted                bool                                                 `protobuf:"varint,17,opt,name=untrusted,proto3" json:"untrusted" xml:"untrusted"`
 	RemoteGUIPort            int                                                  `protobuf:"varint,18,opt,name=remote_gui_port,json=remoteGuiPort,proto3,casttype=int" json:"remoteGUIPort" xml:"remoteGUIPort"`
 >>>>>>> upstream/main
+=======
+	Untrusted                bool                                                 `protobuf:"varint,17,opt,name=untrusted,proto3" json:"untrusted" xml:"untrusted"`
+	RemoteGUIPort            int                                                  `protobuf:"varint,18,opt,name=remote_gui_port,json=remoteGuiPort,proto3,casttype=int" json:"remoteGUIPort" xml:"remoteGUIPort"`
+>>>>>>> dcb916d2eb1b0b452a56b496244eb4c1988789fd
 }
 
 func (m *DeviceConfiguration) Reset()         { *m = DeviceConfiguration{} }
@@ -92,6 +97,7 @@ func init() {
 }
 
 var fileDescriptor_744b782bd13071dd = []byte{
+<<<<<<< HEAD
 <<<<<<< HEAD
 	// 951 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x55, 0x31, 0x6f, 0xdb, 0x46,
@@ -157,6 +163,10 @@ var fileDescriptor_744b782bd13071dd = []byte{
 =======
 	// 980 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x55, 0x31, 0x6f, 0xdb, 0x46,
+=======
+	// 980 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x55, 0x31, 0x6f, 0xdb, 0x46,
+>>>>>>> dcb916d2eb1b0b452a56b496244eb4c1988789fd
 	0x18, 0x15, 0xeb, 0xc4, 0xb6, 0x68, 0xcb, 0xb2, 0x68, 0xc4, 0x61, 0x0c, 0x44, 0x27, 0xb0, 0x1a,
 	0x14, 0x34, 0x95, 0x0b, 0xb7, 0x93, 0xd1, 0x16, 0x28, 0x13, 0xb4, 0x35, 0x8c, 0x26, 0xe9, 0x15,
 	0x5d, 0xbc, 0xb0, 0x24, 0xef, 0xac, 0x1c, 0x2c, 0xf2, 0x58, 0xf2, 0xa8, 0x48, 0x40, 0x87, 0x8e,
@@ -218,7 +228,10 @@ var fileDescriptor_744b782bd13071dd = []byte{
 	0x95, 0xf9, 0x55, 0xb7, 0xf1, 0xf7, 0x55, 0xb7, 0x71, 0xf2, 0xe0, 0x2d, 0xfe, 0xbb, 0xb2, 0xb1,
 	0x70, 0x56, 0xe5, 0x7f, 0xd8, 0x87, 0xff, 0x06, 0x00, 0x00, 0xff, 0xff, 0xe9, 0x0e, 0x8a, 0x12,
 	0xed, 0x08, 0x00, 0x00,
+<<<<<<< HEAD
 >>>>>>> upstream/main
+=======
+>>>>>>> dcb916d2eb1b0b452a56b496244eb4c1988789fd
 }
 
 func (m *DeviceConfiguration) Marshal() (dAtA []byte, err error) {
@@ -247,7 +260,10 @@ func (m *DeviceConfiguration) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		dAtA[i] = 0x1
 		i--
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> dcb916d2eb1b0b452a56b496244eb4c1988789fd
 		dAtA[i] = 0x90
 	}
 	if m.Untrusted {
@@ -486,11 +502,17 @@ func (m *DeviceConfiguration) ProtoSize() (n int) {
 		n += 2 + sovDeviceconfiguration(uint64(m.MaxRequestKiB))
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if m.Untrusted {
 		n += 3
 	}
 >>>>>>> upstream/main
+=======
+	if m.Untrusted {
+		n += 3
+	}
+>>>>>>> dcb916d2eb1b0b452a56b496244eb4c1988789fd
 	if m.RemoteGUIPort != 0 {
 		n += 2 + sovDeviceconfiguration(uint64(m.RemoteGUIPort))
 	}
@@ -953,7 +975,10 @@ func (m *DeviceConfiguration) Unmarshal(dAtA []byte) error {
 		case 17:
 			if wireType != 0 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> dcb916d2eb1b0b452a56b496244eb4c1988789fd
 				return fmt.Errorf("proto: wrong wireType = %d for field Untrusted", wireType)
 			}
 			var v int
@@ -974,7 +999,10 @@ func (m *DeviceConfiguration) Unmarshal(dAtA []byte) error {
 			m.Untrusted = bool(v != 0)
 		case 18:
 			if wireType != 0 {
+<<<<<<< HEAD
 >>>>>>> upstream/main
+=======
+>>>>>>> dcb916d2eb1b0b452a56b496244eb4c1988789fd
 				return fmt.Errorf("proto: wrong wireType = %d for field RemoteGUIPort", wireType)
 			}
 			m.RemoteGUIPort = 0

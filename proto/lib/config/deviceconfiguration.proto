@@ -25,9 +25,14 @@ message DeviceConfiguration {
     repeated ObservedFolder pending_folders            = 15;
     int32                   max_request_kib            = 16 [(ext.goname) = "MaxRequestKiB", (ext.xml) = "maxRequestKiB", (ext.json) = "maxRequestKiB"];
 <<<<<<< HEAD
+<<<<<<< HEAD
     int32                   remote_gui_port            = 17 [(ext.goname) = "RemoteGUIPort", (ext.xml) = "remoteGUIPort", (ext.json) = "remoteGUIPort"];
 =======
     bool                    untrusted                  = 17;
     int32                   remote_gui_port            = 18 [(ext.goname) = "RemoteGUIPort", (ext.xml) = "remoteGUIPort", (ext.json) = "remoteGUIPort"];
 >>>>>>> upstream/main
+=======
+    bool                    untrusted                  = 17;
+    int32                   remote_gui_port            = 18 [(ext.goname) = "RemoteGUIPort", (ext.xml) = "remoteGUIPort", (ext.json) = "remoteGUIPort"];
+>>>>>>> dcb916d2eb1b0b452a56b496244eb4c1988789fd
 }
