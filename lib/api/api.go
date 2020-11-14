@@ -65,6 +65,7 @@ const (
 	EventSubBufferSize    = 1000
 	defaultEventTimeout   = time.Minute
 	httpsCertLifetimeDays = 820
+	featureFlagUntrusted  = "untrusted"
 )
 
 type service struct {
@@ -110,7 +111,7 @@ func New(id protocol.DeviceID, cfg config.Wrapper, assetDir, tlsDefaultCommonNam
 	s := &service{
 		id:      id,
 		cfg:     cfg,
-		statics: newStaticsServer(cfg.GUI().Theme, assetDir),
+		statics: newStaticsServer(cfg.GUI().Theme, assetDir, cfg.Options().FeatureFlag(featureFlagUntrusted)),
 		model:   m,
 		eventSubs: map[events.EventType]events.BufferedSubscription{
 			DefaultEventMask: defaultSub,
@@ -323,7 +324,8 @@ func (s *service) serve(ctx context.Context) {
 	debugMux.HandleFunc("/rest/debug/cpuprof", s.getCPUProf) // duration
 	debugMux.HandleFunc("/rest/debug/heapprof", s.getHeapProf)
 	debugMux.HandleFunc("/rest/debug/support", s.getSupportBundle)
-	restMux.Handler(http.MethodGet, "/rest/debug/", s.whenDebugging(debugMux))
+	debugMux.HandleFunc("/rest/debug/file", s.getDebugFile)
+	restMux.Handler(http.MethodGet, "/rest/debug/*method", s.whenDebugging(debugMux))
 
 	// A handler that disables caching
 	noCacheRestMux := noCacheMiddleware(metricsMiddleware(restMux))
@@ -449,7 +451,12 @@ func (s *service) CommitConfiguration(from, to config.Configuration) bool {
 	// No action required when this changes, so mask the fact that it changed at all.
 	from.GUI.Debugging = to.GUI.Debugging
 
+	if untrusted := to.Options.FeatureFlag(featureFlagUntrusted); untrusted != from.Options.FeatureFlag(featureFlagUntrusted) {
+		s.statics.setUntrusted(untrusted)
+	}
+
 	if to.GUI == from.GUI {
+		// No GUI changes, we're done here.
 		return true
 	}
 
@@ -838,6 +845,30 @@ func (s *service) getDBFile(w http.ResponseWriter, r *http.Request) {
 		"global":       jsonFileInfo(gf),
 		"local":        jsonFileInfo(lf),
 		"availability": av,
+	})
+}
+
+func (s *service) getDebugFile(w http.ResponseWriter, r *http.Request) {
+	qs := r.URL.Query()
+	folder := qs.Get("folder")
+	file := qs.Get("file")
+
+	snap, err := s.model.DBSnapshot(folder)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+		return
+	}
+
+	lf, _ := snap.Get(protocol.LocalDeviceID, file)
+	gf, _ := snap.GetGlobal(file)
+	av := snap.Availability(file)
+	vl := snap.DebugGlobalVersions(file)
+
+	sendJSON(w, map[string]interface{}{
+		"global":         jsonFileInfo(gf),
+		"local":          jsonFileInfo(lf),
+		"availability":   av,
+		"globalVersions": vl.String(),
 	})
 }
 
